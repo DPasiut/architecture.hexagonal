@@ -1,6 +1,6 @@
 package com.example.architecture.hexagonal.domain.entity;
 
-import com.example.architecture.hexagonal.domain.entity.valueobjects.Description;
+import com.example.architecture.hexagonal.domain.valueobjects.Description;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NonNull;

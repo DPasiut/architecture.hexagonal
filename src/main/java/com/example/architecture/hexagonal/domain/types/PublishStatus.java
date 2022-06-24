@@ -1,4 +1,4 @@
-package com.example.architecture.hexagonal.domain.entity.types;
+package com.example.architecture.hexagonal.domain.types;
 
 public enum PublishStatus {
     DRAFT("DRAFT"),

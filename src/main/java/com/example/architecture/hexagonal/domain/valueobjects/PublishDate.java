@@ -1,4 +1,4 @@
-package com.example.architecture.hexagonal.domain.entity.valueobjects;
+package com.example.architecture.hexagonal.domain.valueobjects;
 
 import java.time.LocalDate;
 

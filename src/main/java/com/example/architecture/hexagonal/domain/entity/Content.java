@@ -1,7 +1,7 @@
 package com.example.architecture.hexagonal.domain.entity;
 
-import com.example.architecture.hexagonal.domain.entity.types.PublishStatus;
-import com.example.architecture.hexagonal.domain.entity.valueobjects.*;
+import com.example.architecture.hexagonal.domain.types.PublishStatus;
+import com.example.architecture.hexagonal.domain.valueobjects.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,8 +22,8 @@ class Content {
     Slug slug;
 
     void generateSlug(){
-    }
 
+    }
     public void publish(){}
     public void unpublish(){}
 }
