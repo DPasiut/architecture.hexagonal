@@ -1,6 +1,7 @@
 package com.example.architecture.hexagonal.domain.entity;
 
-import com.example.architecture.hexagonal.domain.entity.types.*;
+import com.example.architecture.hexagonal.domain.entity.types.PublishStatus;
+import com.example.architecture.hexagonal.domain.entity.valueobjects.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NonNull;
@@ -16,16 +17,6 @@ class PublicComment extends Content {
     CloseForSubmissionDate closeForSubmission;
     PublishStatus publishStatus;
     PublishDate publishDate;
-
-    public PublicComment(
-            @NonNull DmsId dmsId,
-            @NonNull Title title,
-            @NonNull PageDate pageDate,
-            @NonNull UpcomingDate upcomingDate
-    ) {
-        super(dmsId, title, pageDate);
-        this.upcomingDate = upcomingDate;
-    }
 
     @Override
     void generateSlug() {

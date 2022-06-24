@@ -1,11 +1,13 @@
 package com.example.architecture.hexagonal.domain.entity;
 
-import com.example.architecture.hexagonal.domain.entity.types.*;
+import com.example.architecture.hexagonal.domain.entity.types.PublishStatus;
+import com.example.architecture.hexagonal.domain.entity.valueobjects.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
-
+@Builder
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 class Content {
@@ -18,13 +20,6 @@ class Content {
     PublishStatus publishStatus;
     PublishDate publishDate;
     Slug slug;
-
-    public Content(DmsId dmsId, Title title, PageDate pageDate){
-        this.dmsId = dmsId;
-        this.title = title;
-        this.pageDate = pageDate;
-        this.publishStatus = PublishStatus.DRAFT;
-    }
 
     void generateSlug(){
     }
