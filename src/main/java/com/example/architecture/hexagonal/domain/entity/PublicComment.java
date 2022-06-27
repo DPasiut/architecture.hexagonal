@@ -5,7 +5,7 @@ import com.example.architecture.hexagonal.domain.valueobjects.*;
 import lombok.Builder;
 import lombok.NonNull;
 
-@Builder
+
 public class PublicComment extends Content {
 
     @NonNull
@@ -20,7 +20,4 @@ public class PublicComment extends Content {
         this.upcomingDate = upcomingDate;
     }
 
-    @Override
-    void generateSlug() {
-    }
 }

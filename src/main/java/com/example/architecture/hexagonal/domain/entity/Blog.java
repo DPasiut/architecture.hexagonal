@@ -4,7 +4,6 @@ import com.example.architecture.hexagonal.domain.valueobjects.*;
 import lombok.Builder;
 import lombok.NonNull;
 
-@Builder
 public class Blog extends Content {
 
     @NonNull
