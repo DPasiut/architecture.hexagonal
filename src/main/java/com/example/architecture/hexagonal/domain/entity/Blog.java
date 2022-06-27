@@ -1,13 +1,11 @@
 package com.example.architecture.hexagonal.domain.entity;
 
-import com.example.architecture.hexagonal.domain.entity.valueobjects.*;
-import com.example.architecture.hexagonal.domain.valueobjects.Image;
-import com.example.architecture.hexagonal.domain.valueobjects.Text;
+import com.example.architecture.hexagonal.domain.valueobjects.*;
 import lombok.Builder;
 import lombok.NonNull;
 
 @Builder
-class Blog extends Content {
+public class Blog extends Content {
 
     @NonNull
     Text textOne;
@@ -16,4 +14,10 @@ class Blog extends Content {
 
     Text textTwo;
     Image imageTwo;
+
+    public Blog(@NonNull DmsId dmsId, @NonNull Title title, @NonNull PageDate pageDate, @NonNull Text textOne, @NonNull Image imageOne) {
+        super(dmsId, title, pageDate);
+        this.textOne = textOne;
+        this.imageOne = imageOne;
+    }
 }

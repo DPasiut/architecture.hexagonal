@@ -1,15 +1,20 @@
 package com.example.architecture.hexagonal.domain.entity;
 
 import com.example.architecture.hexagonal.domain.valueobjects.Description;
-import lombok.AccessLevel;
+import com.example.architecture.hexagonal.domain.valueobjects.DmsId;
+import com.example.architecture.hexagonal.domain.valueobjects.PageDate;
+import com.example.architecture.hexagonal.domain.valueobjects.Title;
 import lombok.Builder;
 import lombok.NonNull;
-import lombok.experimental.FieldDefaults;
 
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Announcement extends Content {
     @NonNull
     Description description;
+
+    public Announcement(@NonNull DmsId dmsId, @NonNull Title title, @NonNull PageDate pageDate, @NonNull Description description) {
+        super(dmsId, title, pageDate);
+        this.description = description;
+    }
 }
 
