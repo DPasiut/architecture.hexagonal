@@ -11,10 +11,10 @@ import java.time.LocalDate;
 import static org.testng.Assert.assertEquals;
 
 @Test(testName = "Slug generator")
-public class TestContentSlugGenerator {
+public class TestSlugGenerator {
 
     @Test
-    public void testSlugGenerator(){
+    public void testContentSlugGenerator(){
         PageDate date = new PageDate(LocalDate.now());
         Content content = new Content(new DmsId("dmsId"), new Title("@#$%^&*   title!@- -- with lot- special   characters"), date);
 
@@ -23,4 +23,8 @@ public class TestContentSlugGenerator {
         assertEquals(content.slug.value(),"-title-with-lot-special-characters-2022-06-27");
     }
 
+    @Test
+    public void testPublicCommentSlugGenerator(){
+
+    }
 }

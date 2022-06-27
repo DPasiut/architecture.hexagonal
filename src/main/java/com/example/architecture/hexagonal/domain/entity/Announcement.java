@@ -4,7 +4,6 @@ import com.example.architecture.hexagonal.domain.valueobjects.Description;
 import com.example.architecture.hexagonal.domain.valueobjects.DmsId;
 import com.example.architecture.hexagonal.domain.valueobjects.PageDate;
 import com.example.architecture.hexagonal.domain.valueobjects.Title;
-import lombok.Builder;
 import lombok.NonNull;
 
 public class Announcement extends Content {
