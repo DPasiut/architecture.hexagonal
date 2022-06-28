@@ -3,6 +3,7 @@ package com.example.architecture.hexagonal.domain.entity;
 
 import com.example.architecture.hexagonal.domain.Content;
 import com.example.architecture.hexagonal.domain.PublicComment;
+import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -23,7 +24,7 @@ public class TestSlugGenerator {
     CloseForSubmissionDate closeForSubmissionDate = new CloseForSubmissionDate(LocalDate.of(2022, 10, 30));
 
     @Test
-    public void shouldGenerateSlugWithDefaultGenerator() {
+    public void shouldGenerateSlugBasedOnTitlePlusDateWithoutSpecialCharactersAndReplaceEmptySpacesWithSingleDashCharacter() {
         Content content = Content
                 .builder()
                 .pageDate(pageDate)
@@ -35,7 +36,7 @@ public class TestSlugGenerator {
     }
 
     @Test
-    public void shouldGenerateSlugForPublicComment() {
+    public void shouldGenerateSlugBasedOnTitleAndUpcomingDateForPublicComment() {
         PublicComment publicComment = PublicComment
                 .builder()
                 .dmsId(new DmsId("id"))
@@ -44,24 +45,24 @@ public class TestSlugGenerator {
                 .upcomingDate(upcomingDate)
                 .build();
         publicComment.generateSlug();
-        assertEquals(publicComment.getSlug().value(), "-title-with-lot-special-characters-2022-Jun-01-2022-Jun-29");
+        assertEquals(publicComment.getSlug().value(), "-title-with-lot-special-characters-2022-Jun-29");
     }
 
-//    @Test
-//    public void shouldGenerateSlugForPublicCommentWithJustPageDate() {
-//        PublicComment publicComment = PublicComment
-//                .builder()
-//                .dmsId(new DmsId("id"))
-//                .title(new Title("@#$%^&*   title!@- -- with lot- special   characters"))
-//                .slug(null)
-//                .pageDate(pageDate)
-//                .publishStatus(PublishStatus.DRAFT)
-//                .openForSubmissionDate(null)
-//                .closeForSubmission(null)
-//                .publishDate(null)
-//                .upcomingDate(upcomingDate)
-//                .build();
-//        publicComment.generateSlug();
-//        assertEquals(publicComment.getSlug().value(), "-title-with-lot-special-characters-2022-Jun-27-2022-Jun-29");
-//    }
+    @Test
+    public void shouldGenerateSlugBasedOnTitlePlusUpcomingDatePlusLatestDateForPublicComment() {
+        PublicComment publicComment = PublicComment
+                .builder()
+                .dmsId(new DmsId("id"))
+                .title(new Title("@#$%^&*   title!@- -- with lot- special   characters"))
+                .slug(null)
+                .pageDate(pageDate)
+                .publishStatus(PublishStatus.DRAFT)
+                .openForSubmissionDate(openForSubmissionDate)
+                .closeForSubmission(closeForSubmissionDate)
+                .publishDate(publishDate)
+                .upcomingDate(upcomingDate)
+                .build();
+        publicComment.generateSlug();
+        assertEquals(publicComment.getSlug().value(), "-title-with-lot-special-characters-2022-Jun-29-2022-Oct-30");
+    }
 }

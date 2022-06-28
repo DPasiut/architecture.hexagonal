@@ -33,7 +33,7 @@ public class PublicComment extends Content {
         String multipleDashes = "-+";
         String latestDate = formatDate(getLatestDate());
 
-        String slug = this.title.value() + "-" + formatDate(this.pageDate.value()) + (latestDate.equals("") ? "" : "-" + latestDate );
+        String slug = this.title.value() + "-" + formatDate(this.upcomingDate.value()) + (latestDate.equals("") ? "" : "-" + latestDate );
         return slug
                 .replaceAll(whiteSpaces, "-")
                 .replaceAll(multipleDashes, "-")
@@ -42,13 +42,16 @@ public class PublicComment extends Content {
 
     private Optional<LocalDate> getLatestDate() {
         if (closeForSubmission != null) {
-            return Optional.ofNullable(closeForSubmission.value());
+            LocalDate localDate = closeForSubmission.value();
+            return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
         }
         if (openForSubmissionDate != null) {
-            return Optional.ofNullable(openForSubmissionDate.value());
+            LocalDate localDate = openForSubmissionDate.value();
+            return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
         }
         if (publishDate != null) {
-            return Optional.ofNullable(publishDate.value());
+            LocalDate localDate = publishDate.value();
+            return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
         }
         return Optional.empty();
     }
