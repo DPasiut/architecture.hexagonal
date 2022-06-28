@@ -14,8 +14,6 @@ import java.util.Optional;
 
 @SuperBuilder
 public class PublicComment extends Content {
-    public static final String MULTIPLE_DASHES_REGEXP = "-+";
-    public static final String WHITE_SPACES_REGEXP = "\\s";
     private static final String EMPTY_STRING = "";
     @NonNull
     UpcomingDate upcomingDate;

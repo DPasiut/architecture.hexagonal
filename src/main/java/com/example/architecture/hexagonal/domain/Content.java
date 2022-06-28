@@ -11,6 +11,8 @@ import java.time.format.DateTimeFormatter;
 
 @SuperBuilder
 public class Content {
+    protected static final String WHITE_SPACES_REGEXP = "\\s";
+    protected static final String MULTIPLE_DASHES_REGEXP = "-+";
     protected static final String PATTERN = "yyyy-MMM-dd";
     static final String SPECIAL_CHARACTERS_REGEXP = "[^a-zA-Z\\d\\-]";
     @NonNull
@@ -39,13 +41,10 @@ public class Content {
     }
 
     private String buildSlugWithRules() {
-        String whiteSpaces = "\\s";
-        String multipleDashes = "-+";
-
         String slug = this.title.value() + "-" + formatDate(pageDate.value());
         return slug
-                .replaceAll(whiteSpaces, "-")
-                .replaceAll(multipleDashes, "-")
+                .replaceAll(WHITE_SPACES_REGEXP, "-")
+                .replaceAll(MULTIPLE_DASHES_REGEXP, "-")
                 .replaceAll(SPECIAL_CHARACTERS_REGEXP, "");
     }
 
