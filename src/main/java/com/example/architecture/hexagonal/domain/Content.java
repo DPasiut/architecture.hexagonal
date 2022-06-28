@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 @SuperBuilder
 public class Content {
     protected static final String PATTERN = "yyyy-MMM-dd";
-    static final String SPECIAL_CHARACTERS = "[^a-zA-Z\\d\\-]";
+    static final String SPECIAL_CHARACTERS_REGEXP = "[^a-zA-Z\\d\\-]";
     @NonNull
     DmsId dmsId;
     @NonNull
@@ -46,7 +46,7 @@ public class Content {
         return slug
                 .replaceAll(whiteSpaces, "-")
                 .replaceAll(multipleDashes, "-")
-                .replaceAll(SPECIAL_CHARACTERS, "");
+                .replaceAll(SPECIAL_CHARACTERS_REGEXP, "");
     }
 
     protected String formatDate(LocalDate value) {

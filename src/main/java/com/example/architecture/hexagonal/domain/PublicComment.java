@@ -14,6 +14,8 @@ import java.util.Optional;
 
 @SuperBuilder
 public class PublicComment extends Content {
+    public static final String MULTIPLE_DASHES_REGEXP = "-+";
+    public static final String WHITE_SPACES_REGEXP = "\\s";
     private static final String EMPTY_STRING = "";
     @NonNull
     UpcomingDate upcomingDate;
@@ -29,15 +31,12 @@ public class PublicComment extends Content {
     }
 
     private String buildSlugWithRules() {
-        String whiteSpaces = "\\s";
-        String multipleDashes = "-+";
         String latestDate = formatDate(getLatestDate());
-
-        String slug = this.title.value() + "-" + formatDate(this.upcomingDate.value()) + (latestDate.equals("") ? "" : "-" + latestDate );
+        String slug = this.title.value() + "-" + formatDate(this.upcomingDate.value()) + (latestDate.equals("") ? "" : "-" + latestDate);
         return slug
-                .replaceAll(whiteSpaces, "-")
-                .replaceAll(multipleDashes, "-")
-                .replaceAll(SPECIAL_CHARACTERS, "");
+                .replaceAll(WHITE_SPACES_REGEXP, "-")
+                .replaceAll(MULTIPLE_DASHES_REGEXP, "-")
+                .replaceAll(SPECIAL_CHARACTERS_REGEXP, "");
     }
 
     private Optional<LocalDate> getLatestDate() {
