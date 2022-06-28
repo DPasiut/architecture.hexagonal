@@ -1,19 +1,17 @@
-package com.example.architecture.hexagonal.domain.entity;
+package com.example.architecture.hexagonal.domain;
 
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
+import jdk.jshell.spi.ExecutionControl;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.Locale;
 
-@AllArgsConstructor
+@SuperBuilder
 public class Content {
-
-    private static final String PATTERN = "yyyy-MMM-dd";
+    protected static final String PATTERN = "yyyy-MMM-dd";
     static final String SPECIAL_CHARACTERS = "[^a-zA-Z\\d\\-]";
     @NonNull
     DmsId dmsId;
@@ -23,19 +21,14 @@ public class Content {
     PageDate pageDate;
     PublishStatus publishStatus;
     PublishDate publishDate;
+    @Getter
     Slug slug;
-
-    public Content(@NonNull DmsId dmsId, @NonNull Title title, @NonNull PageDate pageDate) {
-        this.dmsId = dmsId;
-        this.title = title;
-        this.pageDate = pageDate;
-        this.publishStatus = PublishStatus.DRAFT;
+    public void unpublish() throws ExecutionControl.NotImplementedException {
+        throw new ExecutionControl.NotImplementedException("Not implemented method");
     }
 
-    public void unpublish() {
-    }
-
-    public void publish() {
+    public void publish() throws ExecutionControl.NotImplementedException {
+        throw new ExecutionControl.NotImplementedException("Not implemented method");
     }
 
     public void generateSlug() {
@@ -49,7 +42,7 @@ public class Content {
         String whiteSpaces = "\\s";
         String multipleDashes = "-+";
 
-        String slug = this.title.value() + "-" +  formatDate(pageDate.value());
+        String slug = this.title.value() + "-" + formatDate(pageDate.value());
         return slug
                 .replaceAll(whiteSpaces, "-")
                 .replaceAll(multipleDashes, "-")
