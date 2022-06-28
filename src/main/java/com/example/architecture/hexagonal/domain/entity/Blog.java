@@ -1,7 +1,6 @@
 package com.example.architecture.hexagonal.domain.entity;
 
 import com.example.architecture.hexagonal.domain.valueobjects.*;
-import lombok.Builder;
 import lombok.NonNull;
 
 public class Blog extends Content {

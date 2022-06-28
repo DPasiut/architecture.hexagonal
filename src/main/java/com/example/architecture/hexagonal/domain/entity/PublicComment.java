@@ -4,6 +4,11 @@ import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
 import lombok.NonNull;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class PublicComment extends Content {
 
@@ -11,8 +16,9 @@ public class PublicComment extends Content {
     UpcomingDate upcomingDate;
     OpenForSubmissionDate openForSubmissionDate;
     CloseForSubmissionDate closeForSubmission;
-    PublishStatus publishStatus;
     PublishDate publishDate;
+    PublishStatus publishStatus;
+
 
     public PublicComment(@NonNull DmsId dmsId, @NonNull Title title, @NonNull PageDate pageDate, @NonNull UpcomingDate upcomingDate) {
         super(dmsId, title, pageDate);
@@ -20,7 +26,7 @@ public class PublicComment extends Content {
     }
 
     @Override
-    void generateSlug() {
+    public void generateSlug() {
         if (slug == null) {
             String slug = buildSlugWithRules();
             this.slug = new Slug(slug);
@@ -28,14 +34,25 @@ public class PublicComment extends Content {
     }
 
     private String buildSlugWithRules() {
-        String specialCharacters = "[^a-zA-Z\\d\\-]";
         String whiteSpaces = "\\s";
         String multipleDashes = "-+";
-
-        String slug = this.title.value() + "-" + this.pageDate.value().toString();
+        String latestDate = chooseDate();
+        String slug = this.title.value() + "-" + formatDate(this.pageDate.value()) + (!latestDate.equals("") ? "-" + latestDate : "");
         return slug
                 .replaceAll(whiteSpaces, "-")
                 .replaceAll(multipleDashes,"-")
-                .replaceAll(specialCharacters,"");
+                .replaceAll(SPECIAL_CHARACTERS,"");
+    }
+
+    private String chooseDate(){
+        List<LocalDate> localDates = new ArrayList<>();
+        localDates.add(upcomingDate != null ? upcomingDate.value() : null);
+        localDates.add(openForSubmissionDate != null ? openForSubmissionDate.value() : null);
+        localDates.add(closeForSubmission != null ? closeForSubmission.value() : null);
+        while (localDates.remove(null));
+
+        LocalDate latestDate = Collections.max(localDates);
+
+        return latestDate != null ? formatDate(latestDate) : "";
     }
 }

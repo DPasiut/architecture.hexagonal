@@ -3,12 +3,18 @@ package com.example.architecture.hexagonal.domain.entity;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.NonNull;
 
-@Builder
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Locale;
+
 @AllArgsConstructor
 public class Content {
+
+    private static final String PATTERN = "yyyy-MMM-dd";
+    static final String SPECIAL_CHARACTERS = "[^a-zA-Z\\d\\-]";
     @NonNull
     DmsId dmsId;
     @NonNull
@@ -23,25 +29,7 @@ public class Content {
         this.dmsId = dmsId;
         this.title = title;
         this.pageDate = pageDate;
-    }
-
-    void generateSlug() {
-        if (slug == null) {
-            String slug = buildSlugWithRules();
-            this.slug = new Slug(slug);
-        }
-    }
-
-    private String buildSlugWithRules() {
-        String specialCharacters = "[^a-zA-Z\\d\\-]";
-        String whiteSpaces = "\\s";
-        String multipleDashes = "-+";
-
-        String slug = this.title.value() + "-" + this.pageDate.value().toString();
-        return slug
-                .replaceAll(whiteSpaces, "-")
-                .replaceAll(multipleDashes,"-")
-                .replaceAll(specialCharacters,"");
+        this.publishStatus = PublishStatus.DRAFT;
     }
 
     public void unpublish() {
@@ -49,4 +37,27 @@ public class Content {
 
     public void publish() {
     }
+
+    public void generateSlug() {
+        if (slug == null) {
+            String slug = buildSlugWithRules();
+            this.slug = new Slug(slug);
+        }
+    }
+
+    private String buildSlugWithRules() {
+        String whiteSpaces = "\\s";
+        String multipleDashes = "-+";
+
+        String slug = this.title.value() + "-" +  formatDate(pageDate.value());
+        return slug
+                .replaceAll(whiteSpaces, "-")
+                .replaceAll(multipleDashes, "-")
+                .replaceAll(SPECIAL_CHARACTERS, "");
+    }
+
+    protected String formatDate(LocalDate value) {
+        return value.format(DateTimeFormatter.ofPattern(PATTERN));
+    }
+
 }
