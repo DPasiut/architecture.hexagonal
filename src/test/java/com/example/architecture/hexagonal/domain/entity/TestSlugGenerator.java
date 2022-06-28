@@ -65,4 +65,22 @@ public class TestSlugGenerator {
         publicComment.generateSlug();
         assertEquals(publicComment.getSlug().value(), "-title-with-lot-special-characters-2022-Jun-29-2022-Oct-30");
     }
+
+    @Test
+    public void shouldNotGenerateNewSlugWhileSlugExist(){
+        PublicComment publicComment = PublicComment
+                .builder()
+                .dmsId(new DmsId("id"))
+                .title(new Title("@#$%^&*   title!@- -- with lot- special   characters"))
+                .slug(new Slug("slug-2022-Jun-29"))
+                .pageDate(pageDate)
+                .publishStatus(PublishStatus.DRAFT)
+                .openForSubmissionDate(openForSubmissionDate)
+                .closeForSubmission(closeForSubmissionDate)
+                .publishDate(publishDate)
+                .upcomingDate(upcomingDate)
+                .build();
+        publicComment.generateSlug();
+        assertEquals(publicComment.getSlug().value(), "slug-2022-Jun-29");
+    }
 }
