@@ -11,11 +11,12 @@ public record Title(String value) {
         lengthValidation(value);
     }
 
-    private void nullsValidation(String value){
-        if (value == null){
+    private void nullsValidation(String value) {
+        if (value == null) {
             throw new NullTitleException();
         }
     }
+
     private void lengthValidation(String value) {
         if (value.length() > MAX_LENGTH) {
             throw new TooLongTitleException();
