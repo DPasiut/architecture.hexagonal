@@ -1,6 +1,7 @@
 package com.example.architecture.hexagonal.domain.valueobjects;
 
-import com.example.architecture.hexagonal.domain.errors.TooLongTitleException;
+import com.example.architecture.hexagonal.domain.exceptions.NullTitleException;
+import com.example.architecture.hexagonal.domain.exceptions.TooLongTitleException;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -10,7 +11,7 @@ import static org.testng.Assert.assertThrows;
 public class TestTitle {
     @Test
     public void shouldThrowExceptionForNullValue() {
-        assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullTitleException.class, () -> {
             new Title(null);
         });
     }

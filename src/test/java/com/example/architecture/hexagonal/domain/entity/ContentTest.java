@@ -13,9 +13,9 @@ import java.time.LocalDate;
 
 import static org.testng.Assert.assertEquals;
 
-@Test(testName = "Slug generator")
+@Test(testName = "Content slug generator")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TestSlugGenerator {
+public class ContentTest {
 
     PageDate pageDate = new PageDate(LocalDate.of(2022, 6, 1));
     UpcomingDate upcomingDate = new UpcomingDate(LocalDate.of(2022, 6, 29));
@@ -32,42 +32,11 @@ public class TestSlugGenerator {
                 .title(new Title("@#$%^&*   title!@- -- with lot- special   characters"))
                 .build();
         content.generateSlug();
-        assertEquals(content.getSlug().value(), "-title-with-lot-special-characters-2022-Jun-01");
+        assertEquals(content.getSlug().value(), "title-with-lot-special-characters-2022-Jun-01");
     }
 
     @Test
-    public void shouldGenerateSlugBasedOnTitleAndUpcomingDateForPublicComment() {
-        PublicComment publicComment = PublicComment
-                .builder()
-                .dmsId(new DmsId("id"))
-                .title(new Title("@#$%^&*   title!@- -- with lot- special   characters"))
-                .pageDate(pageDate)
-                .upcomingDate(upcomingDate)
-                .build();
-        publicComment.generateSlug();
-        assertEquals(publicComment.getSlug().value(), "-title-with-lot-special-characters-2022-Jun-29");
-    }
-
-    @Test
-    public void shouldGenerateSlugBasedOnTitlePlusUpcomingDatePlusLatestDateForPublicComment() {
-        PublicComment publicComment = PublicComment
-                .builder()
-                .dmsId(new DmsId("id"))
-                .title(new Title("@#$%^&*   title!@- -- with lot- special   characters"))
-                .slug(null)
-                .pageDate(pageDate)
-                .publishStatus(PublishStatus.DRAFT)
-                .openForSubmissionDate(openForSubmissionDate)
-                .closeForSubmission(closeForSubmissionDate)
-                .publishDate(publishDate)
-                .upcomingDate(upcomingDate)
-                .build();
-        publicComment.generateSlug();
-        assertEquals(publicComment.getSlug().value(), "-title-with-lot-special-characters-2022-Jun-29-2022-Oct-30");
-    }
-
-    @Test
-    public void shouldNotGenerateNewSlugWhileSlugExist(){
+    public void shouldNotGenerateNewSlugWhileSlugExist() {
         PublicComment publicComment = PublicComment
                 .builder()
                 .dmsId(new DmsId("id"))

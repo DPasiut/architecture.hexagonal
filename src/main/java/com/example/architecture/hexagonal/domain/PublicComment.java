@@ -1,9 +1,6 @@
 package com.example.architecture.hexagonal.domain;
 
-import com.example.architecture.hexagonal.domain.valueobjects.CloseForSubmissionDate;
-import com.example.architecture.hexagonal.domain.valueobjects.OpenForSubmissionDate;
-import com.example.architecture.hexagonal.domain.valueobjects.Slug;
-import com.example.architecture.hexagonal.domain.valueobjects.UpcomingDate;
+import com.example.architecture.hexagonal.domain.valueobjects.*;
 import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
@@ -19,22 +16,20 @@ public class PublicComment extends Content {
     UpcomingDate upcomingDate;
     OpenForSubmissionDate openForSubmissionDate;
     CloseForSubmissionDate closeForSubmission;
+    ReportDue reportDue;
 
     @Override
-    public void generateSlug() {
-        if (slug == null) {
-            String slug = buildSlugWithRules();
-            this.slug = new Slug(slug);
-        }
-    }
-
-    private String buildSlugWithRules() {
+    protected Slug buildSlugWithRules() {
         String latestDate = formatDate(getLatestDate());
-        String slug = this.title.value() + "-" + formatDate(this.upcomingDate.value()) + (latestDate.equals("") ? "" : "-" + latestDate);
-        return slug
-                .replaceAll(WHITE_SPACES_REGEXP, "-")
-                .replaceAll(MULTIPLE_DASHES_REGEXP, "-")
-                .replaceAll(SPECIAL_CHARACTERS_REGEXP, "");
+        StringBuilder slug = new StringBuilder();
+        slug
+                .append(this.title.value())
+                .append('-')
+                .append(formatDate(upcomingDate.value()));
+        if (!latestDate.equals("")) {
+            slug.append('-').append(latestDate);
+        }
+        return Slug.fromRawString(slug.toString());
     }
 
     private Optional<LocalDate> getLatestDate() {
@@ -48,6 +43,10 @@ public class PublicComment extends Content {
         }
         if (publishDate != null) {
             LocalDate localDate = publishDate.value();
+            return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
+        }
+        if (reportDue != null) {
+            LocalDate localDate = reportDue.value();
             return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
         }
         return Optional.empty();

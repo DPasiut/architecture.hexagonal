@@ -11,10 +11,8 @@ import java.time.format.DateTimeFormatter;
 
 @SuperBuilder
 public class Content {
-    protected static final String WHITE_SPACES_REGEXP = "\\s";
-    protected static final String MULTIPLE_DASHES_REGEXP = "-+";
+
     protected static final String PATTERN = "yyyy-MMM-dd";
-    static final String SPECIAL_CHARACTERS_REGEXP = "[^a-zA-Z\\d\\-]";
     @NonNull
     DmsId dmsId;
     @NonNull
@@ -25,6 +23,7 @@ public class Content {
     PublishDate publishDate;
     @Getter
     Slug slug;
+
     public void unpublish() throws ExecutionControl.NotImplementedException {
         throw new ExecutionControl.NotImplementedException("Not implemented method");
     }
@@ -35,20 +34,20 @@ public class Content {
 
     public void generateSlug() {
         if (slug == null) {
-            String slug = buildSlugWithRules();
-            this.slug = new Slug(slug);
+            this.slug = buildSlugWithRules();
         }
     }
 
-    private String buildSlugWithRules() {
-        String slug = this.title.value() + "-" + formatDate(pageDate.value());
-        return slug
-                .replaceAll(WHITE_SPACES_REGEXP, "-")
-                .replaceAll(MULTIPLE_DASHES_REGEXP, "-")
-                .replaceAll(SPECIAL_CHARACTERS_REGEXP, "");
+    protected Slug buildSlugWithRules() {
+        StringBuilder slug = new StringBuilder();
+        slug
+                .append(this.title.value())
+                .append('-')
+                .append(formatDate(pageDate.value()));
+        return Slug.fromRawString(slug.toString());
     }
 
-    protected String formatDate(LocalDate value) {
+    protected static String formatDate(LocalDate value) {
         return value.format(DateTimeFormatter.ofPattern(PATTERN));
     }
 
