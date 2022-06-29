@@ -33,22 +33,25 @@ public class PublicComment extends Content {
     }
 
     private Optional<LocalDate> getLatestDate() {
-        if (reportDue != null) {
-            LocalDate localDate = reportDue.value();
-            return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
+        if (reportDue != null && !isEqualsToUpcomingDate(reportDue.value())) {
+            return Optional.of(reportDue.value());
         }
-        if (closeForSubmission != null) {
-            LocalDate localDate = closeForSubmission.value();
-            return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
+
+        if (closeForSubmission != null && !isEqualsToUpcomingDate(closeForSubmission.value())) {
+            return Optional.of(closeForSubmission.value());
         }
-        if (openForSubmissionDate != null) {
-            LocalDate localDate = openForSubmissionDate.value();
-            return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
+
+        if (openForSubmissionDate != null && !isEqualsToUpcomingDate(openForSubmissionDate.value())) {
+            return Optional.of(openForSubmissionDate.value());
         }
         return Optional.empty();
     }
 
     protected String formatDate(Optional<LocalDate> value) {
         return value.map(date -> date.format(DateTimeFormatter.ofPattern(PATTERN))).orElse(EMPTY_STRING);
+    }
+
+    private boolean isEqualsToUpcomingDate(LocalDate localDate){
+        return localDate.equals(upcomingDate.value());
     }
 }
