@@ -2,7 +2,6 @@ package com.example.architecture.hexagonal.domain.entity;
 
 
 import com.example.architecture.hexagonal.domain.Content;
-import com.example.architecture.hexagonal.domain.PublicComment;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
 import lombok.AccessLevel;
@@ -37,19 +36,16 @@ public class ContentTest {
 
     @Test
     public void shouldNotGenerateNewSlugWhileSlugExist() {
-        PublicComment publicComment = PublicComment
+        Content content = Content
                 .builder()
                 .dmsId(new DmsId("id"))
                 .title(new Title("@#$%^&*   title!@- -- with lot- special   characters"))
                 .slug(new Slug("slug-2022-Jun-29"))
                 .pageDate(pageDate)
                 .publishStatus(PublishStatus.DRAFT)
-                .openForSubmissionDate(openForSubmissionDate)
-                .closeForSubmission(closeForSubmissionDate)
                 .publishDate(publishDate)
-                .upcomingDate(upcomingDate)
                 .build();
-        publicComment.generateSlug();
-        assertEquals(publicComment.getSlug().value(), "slug-2022-Jun-29");
+        content.generateSlug();
+        assertEquals(content.getSlug().value(), "slug-2022-Jun-29");
     }
 }
