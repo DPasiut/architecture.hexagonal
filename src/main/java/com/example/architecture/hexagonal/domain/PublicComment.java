@@ -20,38 +20,36 @@ public class PublicComment extends Content {
 
     @Override
     protected Slug buildSlugWithRules() {
-        String latestDate = formatDate(getLatestDate());
+        Optional<LocalDate> latestDate = getLatestDate();
         StringBuilder slug = new StringBuilder();
         slug
                 .append(this.title.value())
                 .append('-')
                 .append(formatDate(upcomingDate.value()));
-        if (!latestDate.equals("")) {
-            slug.append('-').append(latestDate);
+        if (latestDate.isPresent() && !isEqualsToUpcomingDate(latestDate.get())) {
+            slug
+                    .append('-')
+                    .append(formatDate(latestDate.get()));
         }
         return Slug.fromRawString(slug.toString());
     }
 
     private Optional<LocalDate> getLatestDate() {
-        if (reportDue != null && !isEqualsToUpcomingDate(reportDue.value())) {
+        if (reportDue != null) {
             return Optional.of(reportDue.value());
         }
 
-        if (closeForSubmission != null && !isEqualsToUpcomingDate(closeForSubmission.value())) {
+        if (closeForSubmission != null) {
             return Optional.of(closeForSubmission.value());
         }
 
-        if (openForSubmissionDate != null && !isEqualsToUpcomingDate(openForSubmissionDate.value())) {
+        if (openForSubmissionDate != null) {
             return Optional.of(openForSubmissionDate.value());
         }
         return Optional.empty();
     }
 
-    protected String formatDate(Optional<LocalDate> value) {
-        return value.map(date -> date.format(DateTimeFormatter.ofPattern(PATTERN))).orElse(EMPTY_STRING);
-    }
-
-    private boolean isEqualsToUpcomingDate(LocalDate localDate){
+    private boolean isEqualsToUpcomingDate(LocalDate localDate) {
         return localDate.equals(upcomingDate.value());
     }
 }

@@ -24,7 +24,6 @@ public class InMemoryContentRepository {
                 .pageDate(new PageDate(LocalDate.now()))
                 .publishDate(new PublishDate(LocalDate.now().plusDays(2)))
                 .title(new Title("announcement title"))
-                .slug(null)
                 .publishStatus(PublishStatus.DRAFT)
                 .description(new Description("announcement description"))
                 .build();
@@ -34,7 +33,6 @@ public class InMemoryContentRepository {
                 .pageDate(new PageDate(LocalDate.now()))
                 .publishDate(new PublishDate(LocalDate.now().plusDays(2)))
                 .title(new Title("blog title"))
-                .slug(null)
                 .publishStatus(PublishStatus.DRAFT)
                 .imageOne(new Image("image one"))
                 .textOne(new Text("text one"))
@@ -44,7 +42,6 @@ public class InMemoryContentRepository {
                 .builder()
                 .dmsId(new DmsId("pubCommentDmsId"))
                 .title(new Title("public comment title"))
-                .slug(null)
                 .pageDate(new PageDate(LocalDate.now()))
                 .upcomingDate(new UpcomingDate(LocalDate.now().plusDays(1)))
                 .openForSubmissionDate(new OpenForSubmissionDate(LocalDate.now().plusDays(2)))
