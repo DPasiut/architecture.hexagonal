@@ -21,6 +21,7 @@ public class PublicCommentTest {
     PublishDate publishDate = new PublishDate(LocalDate.of(2022, 10, 1));
     OpenForSubmissionDate openForSubmissionDate = new OpenForSubmissionDate(LocalDate.of(2022, 10, 2));
     CloseForSubmissionDate closeForSubmissionDate = new CloseForSubmissionDate(LocalDate.of(2022, 10, 30));
+    ReportDue reportDue = new ReportDue(LocalDate.of(2022, 10, 30));
 
     @Test
     public void shouldGenerateSlugBasedOnTitleAndUpcomingDate() {
@@ -46,6 +47,7 @@ public class PublicCommentTest {
                 .openForSubmissionDate(new OpenForSubmissionDate(upcomingDate.value()))
                 .closeForSubmission(new CloseForSubmissionDate(upcomingDate.value()))
                 .publishDate(new PublishDate(upcomingDate.value()))
+                .reportDue(new ReportDue(upcomingDate.value()))
                 .upcomingDate(upcomingDate)
                 .build();
         publicComment.generateSlug();
@@ -86,17 +88,17 @@ public class PublicCommentTest {
     }
 
     @Test
-    public void shouldGenerateSlugBasedOnTitlePlusUpcomingDatePlusPublishDate() {
+    public void shouldGenerateSlugBasedOnTitlePlusUpcomingDatePlusReportDue() {
         PublicComment publicComment = PublicComment
                 .builder()
                 .dmsId(new DmsId("id"))
                 .title(new Title("@#$%^&*   title!@- -- with lot- special   characters"))
                 .pageDate(pageDate)
                 .publishStatus(PublishStatus.DRAFT)
-                .publishDate(publishDate)
+                .reportDue(reportDue)
                 .upcomingDate(upcomingDate)
                 .build();
         publicComment.generateSlug();
-        assertEquals(publicComment.getSlug().value(), "title-with-lot-special-characters-2022-Jun-29-2022-Oct-01");
+        assertEquals(publicComment.getSlug().value(), "title-with-lot-special-characters-2022-Jun-29-2022-Oct-30");
     }
 }

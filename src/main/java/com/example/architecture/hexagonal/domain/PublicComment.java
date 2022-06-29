@@ -33,20 +33,16 @@ public class PublicComment extends Content {
     }
 
     private Optional<LocalDate> getLatestDate() {
+        if (reportDue != null) {
+            LocalDate localDate = reportDue.value();
+            return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
+        }
         if (closeForSubmission != null) {
             LocalDate localDate = closeForSubmission.value();
             return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
         }
         if (openForSubmissionDate != null) {
             LocalDate localDate = openForSubmissionDate.value();
-            return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
-        }
-        if (publishDate != null) {
-            LocalDate localDate = publishDate.value();
-            return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
-        }
-        if (reportDue != null) {
-            LocalDate localDate = reportDue.value();
             return localDate != upcomingDate.value() ? Optional.ofNullable(localDate) : Optional.empty();
         }
         return Optional.empty();
