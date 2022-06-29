@@ -7,19 +7,18 @@ public record Title(String value) {
     private static final int MAX_LENGTH = 80;
 
     public Title {
-        nullsValidation();
-        lengthValidation();
+        nullsValidation(value);
+        lengthValidation(value);
     }
 
-    private void lengthValidation() {
-        if (value.length() > MAX_LENGTH) {
-            throw new TooLongTitleException();
+    private void nullsValidation(String value){
+        if (value == null){
+            throw new NullTitleException();
         }
     }
-
-    private void nullsValidation() {
-        if (value == null) {
-            throw new NullTitleException();
+    private void lengthValidation(String value) {
+        if (value.length() > MAX_LENGTH) {
+            throw new TooLongTitleException();
         }
     }
 }
