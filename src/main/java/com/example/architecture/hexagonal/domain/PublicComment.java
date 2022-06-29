@@ -26,11 +26,15 @@ public class PublicComment extends Content {
                 .append(this.title.value())
                 .append('-')
                 .append(formatDate(upcomingDate.value()));
-        if (latestDate.isPresent() && !isEqualsToUpcomingDate(latestDate.get())) {
-            slug
-                    .append('-')
-                    .append(formatDate(latestDate.get()));
-        }
+        latestDate.ifPresent(localDate -> {
+            if (!isEqualsToUpcomingDate(localDate)) {
+                slug
+                        .append('-')
+                        .append(formatDate(latestDate.get()));
+            }
+
+        });
+
         return new Slug(slug.toString());
     }
 
