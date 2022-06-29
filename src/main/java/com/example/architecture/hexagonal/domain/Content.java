@@ -44,7 +44,7 @@ public class Content {
                 .append(this.title.value())
                 .append('-')
                 .append(formatDate(pageDate.value()));
-        return Slug.fromRawString(slug.toString());
+        return new Slug(slug.toString());
     }
 
     protected static String formatDate(LocalDate value) {

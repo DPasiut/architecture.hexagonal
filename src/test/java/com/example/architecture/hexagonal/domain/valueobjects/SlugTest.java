@@ -8,7 +8,7 @@ import static org.testng.Assert.assertEquals;
 public class SlugTest {
     @Test
     public void shouldRemoveAllSpecialCharactersExceptDashAndReplaceWhiteSpacesAndRepeatedDashesWithSingleDash() {
-        Slug slug = Slug.fromRawString("@#$%^&*   title!@- -- with lot----- special   -!@? ££ § § @ @ @     chara!cter##s");
+        Slug slug = new Slug("@#$%^&*   title!@- -- with lot----- special   -!@? ££ § § @ @ @     chara!cter##s");
         assertEquals(slug.value(), "title-with-lot-special-characters");
     }
 }

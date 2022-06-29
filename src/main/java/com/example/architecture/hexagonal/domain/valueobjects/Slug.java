@@ -9,9 +9,6 @@ public record Slug(String value) {
     public Slug(String value){
         this.value = replaceCharacters(value);
     }
-    public static Slug fromRawString(String value) {
-                return new Slug(replaceCharacters(value));
-    }
 
     private static String replaceCharacters(String value){
         return value.replaceAll(WHITE_SPACES_REGEXP, "-")

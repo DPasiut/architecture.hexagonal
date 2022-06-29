@@ -31,7 +31,7 @@ public class PublicComment extends Content {
                     .append('-')
                     .append(formatDate(latestDate.get()));
         }
-        return Slug.fromRawString(slug.toString());
+        return new Slug(slug.toString());
     }
 
     private Optional<LocalDate> getLatestDate() {
