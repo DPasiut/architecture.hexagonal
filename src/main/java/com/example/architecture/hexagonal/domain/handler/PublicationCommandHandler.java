@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 public class PublicationCommandHandler {
-    final ContentRepository contentRepository;
+    ContentRepository contentRepository;
 
     public PublishStatus publishContent(PublicationCommand publicationCommand) {
         Optional<Content> content = contentRepository.getById(publicationCommand.id());
