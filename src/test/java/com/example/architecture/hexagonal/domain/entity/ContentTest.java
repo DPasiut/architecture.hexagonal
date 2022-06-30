@@ -2,6 +2,7 @@ package com.example.architecture.hexagonal.domain.entity;
 
 
 import com.example.architecture.hexagonal.domain.Content;
+import com.example.architecture.hexagonal.domain.exceptions.UnpublishContentException;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
 import lombok.AccessLevel;
@@ -10,42 +11,80 @@ import org.testng.annotations.Test;
 
 import java.time.LocalDate;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.*;
 
-@Test(testName = "Content slug generator")
+@Test(testName = "Content publication")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ContentTest {
-
-    PageDate pageDate = new PageDate(LocalDate.of(2022, 6, 1));
-    UpcomingDate upcomingDate = new UpcomingDate(LocalDate.of(2022, 6, 29));
-    PublishDate publishDate = new PublishDate(LocalDate.of(2022, 10, 1));
-    OpenForSubmissionDate openForSubmissionDate = new OpenForSubmissionDate(LocalDate.of(2022, 10, 2));
-    CloseForSubmissionDate closeForSubmissionDate = new CloseForSubmissionDate(LocalDate.of(2022, 10, 30));
-
+    final PageDate pageDate = new PageDate(LocalDate.of(2022, 6, 1));
     @Test
-    public void shouldGenerateSlugBasedOnTitlePlusDateWithoutSpecialCharactersAndReplaceEmptySpacesWithSingleDashCharacter() {
-        Content content = Content
-                .builder()
-                .pageDate(pageDate)
-                .dmsId(new DmsId("dmsId"))
-                .title(new Title("@#$%^&*   title!@- -- with lot- special   characters"))
-                .build();
-        content.generateSlug();
-        assertEquals(content.getSlug().value(), "title-with-lot-special-characters-2022-Jun-01");
-    }
-
-    @Test
-    public void shouldNotGenerateNewSlugWhileSlugExist() {
+    public void shouldPublishContentAndGenerateSlugWhenPublishStatusEqualsDraft() {
         Content content = Content
                 .builder()
                 .dmsId(new DmsId("id"))
-                .title(new Title("@#$%^&*   title!@- -- with lot- special   characters"))
-                .slug(new Slug("slug-2022-Jun-29"))
+                .title(new Title("publish content"))
                 .pageDate(pageDate)
                 .publishStatus(PublishStatus.DRAFT)
-                .publishDate(publishDate)
                 .build();
-        content.generateSlug();
-        assertEquals(content.getSlug().value(), "slug-2022-Jun-29");
+
+        assertNull(content.getSlug());
+        assertEquals(PublishStatus.DRAFT, content.getPublishStatus());
+
+        content.publish();
+
+        assertEquals(PublishStatus.PUBLISHED, content.getPublishStatus());
+        assertEquals("publish-content-2022-Jun-01", content.getSlug().value());
+    }
+
+    @Test
+    public void shouldPublishContentAndNotGenerateNewSlugWhenPublishStatusEqualsUnpublished() {
+        Content content = Content
+                .builder()
+                .dmsId(new DmsId("id"))
+                .title(new Title("publish content"))
+                .pageDate(pageDate)
+                .slug(new Slug("publish-content-2022-Jun-29"))
+                .publishStatus(PublishStatus.UNPUBLISHED)
+                .build();
+
+        assertEquals(PublishStatus.UNPUBLISHED, content.getPublishStatus());
+        assertEquals("publish-content-2022-Jun-29", content.getSlug().value());
+
+        content.publish();
+
+        assertEquals(PublishStatus.PUBLISHED, content.getPublishStatus());
+        assertEquals("publish-content-2022-Jun-29", content.getSlug().value());
+    }
+
+    @Test
+    public void shouldUnpublishContentWhenPublishStatusEqualsPublished() {
+        Content content = Content
+                .builder()
+                .dmsId(new DmsId("id"))
+                .title(new Title("publish content"))
+                .pageDate(pageDate)
+                .slug(new Slug("publish-content-2022-Jun-29"))
+                .publishStatus(PublishStatus.PUBLISHED)
+                .build();
+
+        assertEquals(PublishStatus.PUBLISHED, content.getPublishStatus());
+        content.unpublish();
+        assertEquals(PublishStatus.UNPUBLISHED, content.getPublishStatus());
+    }
+
+    @Test
+    public void shouldNotUnpublishContentWhenPublishStatusEqualsDraft() {
+        Content content = Content
+                .builder()
+                .dmsId(new DmsId("id"))
+                .title(new Title("publish content"))
+                .pageDate(pageDate)
+                .slug(new Slug("publish-content-2022-Jun-29"))
+                .publishStatus(PublishStatus.DRAFT)
+                .build();
+
+        assertEquals(PublishStatus.DRAFT, content.getPublishStatus());
+        assertThrows(UnpublishContentException.class, content::unpublish);
+        assertEquals(PublishStatus.DRAFT, content.getPublishStatus());
     }
 }

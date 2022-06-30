@@ -1,5 +1,7 @@
 package com.example.architecture.hexagonal.domain;
 
+import com.example.architecture.hexagonal.domain.exceptions.PublishContentException;
+import com.example.architecture.hexagonal.domain.exceptions.UnpublishContentException;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
 import jdk.jshell.spi.ExecutionControl;
@@ -19,17 +21,25 @@ public class Content {
     Title title;
     @NonNull
     PageDate pageDate;
+    @Getter
     PublishStatus publishStatus;
     PublishDate publishDate;
     @Getter
     Slug slug;
 
-    public void unpublish() throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Not implemented method");
+    public void unpublish() {
+        if (!this.publishStatus.equals(PublishStatus.PUBLISHED)) {
+            throw new UnpublishContentException(this.dmsId);
+        }
+        this.publishStatus = PublishStatus.UNPUBLISHED;
     }
 
-    public void publish() throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Not implemented method");
+    public void publish() {
+        if (this.publishStatus.equals(PublishStatus.PUBLISHED)) {
+            throw new PublishContentException(this.dmsId);
+        }
+        generateSlug();
+        this.publishStatus = PublishStatus.PUBLISHED;
     }
 
     public void generateSlug() {
