@@ -16,6 +16,7 @@ public class Content {
 
     protected static final String PATTERN = "yyyy-MMM-dd";
     @NonNull
+    @Getter
     DmsId dmsId;
     @NonNull
     Title title;
