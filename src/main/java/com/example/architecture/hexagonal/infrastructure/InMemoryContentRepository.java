@@ -10,7 +10,6 @@ import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
 import org.springframework.stereotype.Repository;
 
-import java.net.ConnectException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,10 +62,15 @@ public class InMemoryContentRepository implements ContentRepository {
 
     @Override
     public Optional<Content> getById(DmsId id) {
-        return Optional.ofNullable(contents.stream().filter(content1 -> content1.getDmsId().equals(id)).findFirst().orElseThrow(() -> new ContentNotFoundException(id)));
+        return contents.stream().filter(content1 -> content1.getDmsId().equals(id)).findFirst();
     }
 
     @Override
     public void save(Content content) {
+        contents.set(getIndexByDmsId(content.getDmsId()), content);
+    }
+
+    private int getIndexByDmsId(DmsId id){
+        return contents.indexOf(contents.stream().filter(content -> content.getDmsId().equals(id)).findFirst().orElseThrow());
     }
 }
