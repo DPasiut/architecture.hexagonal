@@ -4,11 +4,13 @@ import com.example.architecture.hexagonal.domain.Announcement;
 import com.example.architecture.hexagonal.domain.Blog;
 import com.example.architecture.hexagonal.domain.Content;
 import com.example.architecture.hexagonal.domain.PublicComment;
+import com.example.architecture.hexagonal.domain.exceptions.ContentNotFoundException;
 import com.example.architecture.hexagonal.domain.port.ContentRepository;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
 import org.springframework.stereotype.Repository;
 
+import java.net.ConnectException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,7 @@ public class InMemoryContentRepository implements ContentRepository {
 
     @Override
     public Optional<Content> getById(DmsId id) {
-        return contents.stream().filter(content -> content.getDmsId().equals(id)).findFirst();
+        return Optional.ofNullable(contents.stream().filter(content1 -> content1.getDmsId().equals(id)).findFirst().orElseThrow(() -> new ContentNotFoundException(id)));
     }
 
     @Override
