@@ -4,7 +4,6 @@ import com.example.architecture.hexagonal.domain.Announcement;
 import com.example.architecture.hexagonal.domain.Blog;
 import com.example.architecture.hexagonal.domain.Content;
 import com.example.architecture.hexagonal.domain.PublicComment;
-import com.example.architecture.hexagonal.domain.exceptions.ContentNotFoundException;
 import com.example.architecture.hexagonal.domain.port.ContentRepository;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;

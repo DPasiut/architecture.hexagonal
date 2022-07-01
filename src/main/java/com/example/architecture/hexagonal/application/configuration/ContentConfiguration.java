@@ -1,7 +1,7 @@
 package com.example.architecture.hexagonal.application.configuration;
 
-import com.example.architecture.hexagonal.domain.handler.publish.PublishCommandHandler;
-import com.example.architecture.hexagonal.domain.handler.unpublish.UnpublishCommandHandler;
+import com.example.architecture.hexagonal.domain.handlers.publish.PublishCommandHandler;
+import com.example.architecture.hexagonal.domain.handlers.unpublish.UnpublishCommandHandler;
 import com.example.architecture.hexagonal.domain.port.ContentRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

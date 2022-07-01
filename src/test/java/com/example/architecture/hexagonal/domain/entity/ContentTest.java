@@ -2,7 +2,7 @@ package com.example.architecture.hexagonal.domain.entity;
 
 
 import com.example.architecture.hexagonal.domain.Content;
-import com.example.architecture.hexagonal.domain.exceptions.UnpublishContentException;
+import com.example.architecture.hexagonal.domain.exceptions.ContentNotPublishedException;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
 import lombok.AccessLevel;
@@ -84,7 +84,7 @@ public class ContentTest {
                 .build();
 
         assertEquals(PublishStatus.DRAFT, content.getPublishStatus());
-        assertThrows(UnpublishContentException.class, content::unpublish);
+        assertThrows(ContentNotPublishedException.class, content::unpublish);
         assertEquals(PublishStatus.DRAFT, content.getPublishStatus());
     }
 }

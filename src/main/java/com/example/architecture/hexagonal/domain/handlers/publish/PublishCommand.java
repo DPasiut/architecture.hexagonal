@@ -1,4 +1,4 @@
-package com.example.architecture.hexagonal.domain.handler.publish;
+package com.example.architecture.hexagonal.domain.handlers.publish;
 
 import com.example.architecture.hexagonal.domain.valueobjects.DmsId;
 

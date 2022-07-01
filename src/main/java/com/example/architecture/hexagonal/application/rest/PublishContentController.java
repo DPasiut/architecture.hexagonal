@@ -1,9 +1,9 @@
 package com.example.architecture.hexagonal.application.rest;
 
-import com.example.architecture.hexagonal.domain.handler.publish.PublishCommand;
-import com.example.architecture.hexagonal.domain.handler.publish.PublishCommandHandler;
-import com.example.architecture.hexagonal.domain.handler.unpublish.UnpublishCommand;
-import com.example.architecture.hexagonal.domain.handler.unpublish.UnpublishCommandHandler;
+import com.example.architecture.hexagonal.domain.handlers.publish.PublishCommand;
+import com.example.architecture.hexagonal.domain.handlers.publish.PublishCommandHandler;
+import com.example.architecture.hexagonal.domain.handlers.unpublish.UnpublishCommand;
+import com.example.architecture.hexagonal.domain.handlers.unpublish.UnpublishCommandHandler;
 import com.example.architecture.hexagonal.domain.valueobjects.DmsId;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

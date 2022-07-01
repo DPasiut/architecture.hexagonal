@@ -1,4 +1,4 @@
-package com.example.architecture.hexagonal.domain.handler.unpublish;
+package com.example.architecture.hexagonal.domain.handlers.unpublish;
 
 import com.example.architecture.hexagonal.domain.valueobjects.DmsId;
 

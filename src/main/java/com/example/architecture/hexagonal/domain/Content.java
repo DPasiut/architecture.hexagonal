@@ -1,11 +1,11 @@
 package com.example.architecture.hexagonal.domain;
 
-import com.example.architecture.hexagonal.domain.exceptions.PublishContentException;
-import com.example.architecture.hexagonal.domain.exceptions.UnpublishContentException;
+import com.example.architecture.hexagonal.domain.exceptions.ContentAlreadyPublishedException;
+import com.example.architecture.hexagonal.domain.exceptions.ContentNotPublishedException;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
-import jdk.jshell.spi.ExecutionControl;
-import lombok.*;
+import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
@@ -30,14 +30,14 @@ public class Content {
 
     public void unpublish() {
         if (!this.publishStatus.equals(PublishStatus.PUBLISHED)) {
-            throw new UnpublishContentException(this.dmsId);
+            throw new ContentNotPublishedException(this.dmsId);
         }
         this.publishStatus = PublishStatus.UNPUBLISHED;
     }
 
     public void publish() {
         if (this.publishStatus.equals(PublishStatus.PUBLISHED)) {
-            throw new PublishContentException(this.dmsId);
+            throw new ContentAlreadyPublishedException(this.dmsId);
         }
         generateSlug();
         this.publishStatus = PublishStatus.PUBLISHED;
