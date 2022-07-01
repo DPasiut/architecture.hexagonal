@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class PublishCommandHandler {
-    ContentRepository contentRepository;
+    private final ContentRepository contentRepository;
 
     public void publishContent(PublishCommand publishCommand) {
         contentRepository.getById(publishCommand.id()).ifPresentOrElse(content1 -> {
