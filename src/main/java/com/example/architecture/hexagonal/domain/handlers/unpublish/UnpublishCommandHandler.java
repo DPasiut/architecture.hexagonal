@@ -1,6 +1,6 @@
 package com.example.architecture.hexagonal.domain.handlers.unpublish;
 
-import com.example.architecture.hexagonal.domain.exceptions.ContentNotExistException;
+import com.example.architecture.hexagonal.domain.exceptions.ContentNotFoundException;
 import com.example.architecture.hexagonal.domain.port.ContentRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -13,7 +13,7 @@ public class UnpublishCommandHandler {
             content.unpublish();
             contentRepository.save(content);
         }, () -> {
-            throw new ContentNotExistException();
+            throw new ContentNotFoundException(unpublishCommand.id());
         });
     }
 }
