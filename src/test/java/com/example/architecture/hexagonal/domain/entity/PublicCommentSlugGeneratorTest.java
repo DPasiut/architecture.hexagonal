@@ -14,14 +14,14 @@ import static org.testng.Assert.assertEquals;
 
 @Test(testName = "Public comment slug generator")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PublicCommentTest {
+public class PublicCommentSlugGeneratorTest {
 
-    PageDate pageDate = new PageDate(LocalDate.of(2022, 6, 1));
-    UpcomingDate upcomingDate = new UpcomingDate(LocalDate.of(2022, 6, 29));
-    PublishDate publishDate = new PublishDate(LocalDate.of(2022, 10, 1));
-    OpenForSubmissionDate openForSubmissionDate = new OpenForSubmissionDate(LocalDate.of(2022, 10, 2));
-    CloseForSubmissionDate closeForSubmissionDate = new CloseForSubmissionDate(LocalDate.of(2022, 10, 30));
-    ReportDue reportDue = new ReportDue(LocalDate.of(2022, 10, 30));
+    final PageDate pageDate = new PageDate(LocalDate.of(2022, 6, 1));
+    final UpcomingDate upcomingDate = new UpcomingDate(LocalDate.of(2022, 6, 29));
+    final PublishDate publishDate = new PublishDate(LocalDate.of(2022, 10, 1));
+    final OpenForSubmissionDate openForSubmissionDate = new OpenForSubmissionDate(LocalDate.of(2022, 10, 2));
+    final CloseForSubmissionDate closeForSubmissionDate = new CloseForSubmissionDate(LocalDate.of(2022, 10, 30));
+    final ReportDue reportDue = new ReportDue(LocalDate.of(2022, 10, 30));
 
     @Test
     public void shouldGenerateSlugBasedOnTitleAndUpcomingDate() {

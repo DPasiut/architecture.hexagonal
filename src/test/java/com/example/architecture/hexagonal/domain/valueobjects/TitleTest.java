@@ -8,7 +8,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertThrows;
 
 @Test(testName = "Title length correctness")
-public class TestTitle {
+public class TitleTest {
     @Test
     public void shouldThrowExceptionForNullValue() {
         assertThrows(NullTitleException.class, () -> {

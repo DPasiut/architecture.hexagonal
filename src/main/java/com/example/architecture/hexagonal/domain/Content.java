@@ -1,9 +1,11 @@
 package com.example.architecture.hexagonal.domain;
 
+import com.example.architecture.hexagonal.domain.exceptions.ContentAlreadyPublishedException;
+import com.example.architecture.hexagonal.domain.exceptions.ContentNotPublishedException;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
-import jdk.jshell.spi.ExecutionControl;
-import lombok.*;
+import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
@@ -14,22 +16,31 @@ public class Content {
 
     protected static final String PATTERN = "yyyy-MMM-dd";
     @NonNull
+    @Getter
     DmsId dmsId;
     @NonNull
     Title title;
     @NonNull
     PageDate pageDate;
+    @Getter
     PublishStatus publishStatus;
     PublishDate publishDate;
     @Getter
     Slug slug;
 
-    public void unpublish() throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Not implemented method");
+    public void unpublish() {
+        if (!this.publishStatus.equals(PublishStatus.PUBLISHED)) {
+            throw new ContentNotPublishedException(this.dmsId);
+        }
+        this.publishStatus = PublishStatus.UNPUBLISHED;
     }
 
-    public void publish() throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Not implemented method");
+    public void publish() {
+        if (this.publishStatus.equals(PublishStatus.PUBLISHED)) {
+            throw new ContentAlreadyPublishedException(this.dmsId);
+        }
+        generateSlug();
+        this.publishStatus = PublishStatus.PUBLISHED;
     }
 
     public void generateSlug() {

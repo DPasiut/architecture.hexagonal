@@ -1,20 +1,24 @@
-package com.example.architecture.hexagonal.domain.port;
+package com.example.architecture.hexagonal.infrastructure;
 
 import com.example.architecture.hexagonal.domain.Announcement;
 import com.example.architecture.hexagonal.domain.Blog;
 import com.example.architecture.hexagonal.domain.Content;
 import com.example.architecture.hexagonal.domain.PublicComment;
+import com.example.architecture.hexagonal.domain.port.ContentRepository;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class InMemoryContentRepository {
+@Repository
+public class InMemoryContentRepository implements ContentRepository {
     private List<Content> contents = new ArrayList<>();
 
-    public InMemoryContentRepository() {
+    public InMemoryContentRepository()  {
         fillRepository();
     }
 
@@ -55,4 +59,17 @@ public class InMemoryContentRepository {
         contents.add(publicComment);
     }
 
+    @Override
+    public Optional<Content> getById(DmsId id) {
+        return contents.stream().filter(content1 -> content1.getDmsId().equals(id)).findFirst();
+    }
+
+    @Override
+    public void save(Content content) {
+        contents.set(getIndexByDmsId(content.getDmsId()), content);
+    }
+
+    private int getIndexByDmsId(DmsId id){
+        return contents.indexOf(contents.stream().filter(content -> content.getDmsId().equals(id)).findFirst().orElseThrow());
+    }
 }
