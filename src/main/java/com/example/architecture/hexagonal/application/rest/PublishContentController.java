@@ -5,7 +5,6 @@ import com.example.architecture.hexagonal.domain.handlers.publish.PublishCommand
 import com.example.architecture.hexagonal.domain.handlers.unpublish.UnpublishCommand;
 import com.example.architecture.hexagonal.domain.handlers.unpublish.UnpublishCommandHandler;
 import com.example.architecture.hexagonal.domain.valueobjects.DmsId;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
