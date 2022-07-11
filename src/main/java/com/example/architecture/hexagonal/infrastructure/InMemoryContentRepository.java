@@ -7,6 +7,7 @@ import com.example.architecture.hexagonal.domain.PublicComment;
 import com.example.architecture.hexagonal.domain.port.ContentRepository;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Profile("test")
 public class InMemoryContentRepository implements ContentRepository {
     private List<Content> contents = new ArrayList<>();
 

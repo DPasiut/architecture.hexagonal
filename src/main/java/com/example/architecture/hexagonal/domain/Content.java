@@ -12,20 +12,20 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @SuperBuilder
+@Getter
 public class Content {
 
     protected static final String PATTERN = "yyyy-MMM-dd";
     @NonNull
-    @Getter
     DmsId dmsId;
     @NonNull
     Title title;
     @NonNull
     PageDate pageDate;
-    @Getter
+
     PublishStatus publishStatus;
     PublishDate publishDate;
-    @Getter
+
     Slug slug;
 
     public void unpublish() {
