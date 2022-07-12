@@ -1,7 +1,6 @@
 package com.example.architecture.hexagonal.infrastructure;
 
 import com.example.architecture.hexagonal.domain.Content;
-import com.example.architecture.hexagonal.domain.exceptions.ContentNotFoundException;
 import com.example.architecture.hexagonal.domain.port.ContentRepository;
 import com.example.architecture.hexagonal.domain.valueobjects.DmsId;
 import lombok.RequiredArgsConstructor;
