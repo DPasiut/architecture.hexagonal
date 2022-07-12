@@ -20,11 +20,7 @@ class DatabaseContentRepository implements ContentRepository {
 
     @Override
     public Optional<Content> getById(DmsId id) {
-        Optional<MongoContent> mongoContent = contentRepository.findById(id.value());
-        if (mongoContent.isPresent()){
-            return contentMapper.mapToContent(mongoContent.get());
-        }
-        return Optional.empty();
+        return contentRepository.findById(id.value()).flatMap(contentMapper::mapToContent);
     }
 
     @Override
