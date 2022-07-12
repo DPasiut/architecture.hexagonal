@@ -9,7 +9,6 @@ import java.util.Optional;
 @Component
 class ContentMapper {
     Optional<Content> mapToContent(MongoContent mongoContent) {
-
         return Optional.ofNullable(Content.builder()
                 .slug(mongoContent.slug)
                 .publishDate(mongoContent.publishDate)
