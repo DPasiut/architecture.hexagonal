@@ -1,6 +1,7 @@
 package com.example.architecture.hexagonal.infrastructure;
 
 import com.example.architecture.hexagonal.domain.Content;
+import com.example.architecture.hexagonal.domain.exceptions.ContentNotFoundException;
 import com.example.architecture.hexagonal.domain.port.ContentRepository;
 import com.example.architecture.hexagonal.domain.valueobjects.DmsId;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,11 @@ class DatabaseContentRepository implements ContentRepository {
 
     @Override
     public Optional<Content> getById(DmsId id) {
-        return contentMapper.mapToContent(contentRepository.findById(id.value()));
+        Optional<MongoContent> mongoContent = contentRepository.findById(id.value());
+        if (mongoContent.isPresent()){
+            return contentMapper.mapToContent(mongoContent.get());
+        }
+        return Optional.empty();
     }
 
     @Override
