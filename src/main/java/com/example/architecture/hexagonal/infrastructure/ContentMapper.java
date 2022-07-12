@@ -17,7 +17,6 @@ class ContentMapper {
                 .dmsId(new DmsId(mongoContent.id))
                 .publishStatus(mongoContent.publishStatus)
                 .build());
-
     }
 
     MongoContent mapToMongoContent(Content content) {
