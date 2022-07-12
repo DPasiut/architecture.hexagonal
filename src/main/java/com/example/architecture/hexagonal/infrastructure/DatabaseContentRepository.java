@@ -19,7 +19,7 @@ class DatabaseContentRepository implements ContentRepository {
 
     @Override
     public Optional<Content> getById(DmsId id) {
-        return contentMapper.mapToContent(contentRepository.findById(id.value()));
+        return contentRepository.findById(id.value()).map(contentMapper::mapToContent);
     }
 
     @Override
