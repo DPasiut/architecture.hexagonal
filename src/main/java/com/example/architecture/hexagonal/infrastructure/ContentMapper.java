@@ -8,15 +8,15 @@ import java.util.Optional;
 
 @Component
 class ContentMapper {
-    Optional<Content> mapToContent(MongoContent mongoContent) {
-        return Optional.of(Content.builder()
+    Content mapToContent(MongoContent mongoContent) {
+        return Content.builder()
                 .slug(mongoContent.slug)
                 .publishDate(mongoContent.publishDate)
                 .title(mongoContent.title)
                 .pageDate(mongoContent.pageDate)
                 .dmsId(new DmsId(mongoContent.id))
                 .publishStatus(mongoContent.publishStatus)
-                .build());
+                .build();
     }
 
     MongoContent mapToMongoContent(Content content) {
