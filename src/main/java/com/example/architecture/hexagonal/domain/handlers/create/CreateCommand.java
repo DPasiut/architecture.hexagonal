@@ -1,6 +1,6 @@
 package com.example.architecture.hexagonal.domain.handlers.create;
 
-import com.example.architecture.hexagonal.domain.Content;
+import com.example.architecture.hexagonal.domain.valueobjects.ContentDto;
 
-public record CreateCommand(Content content) {
+public record CreateCommand(ContentDto contentDto) {
 }

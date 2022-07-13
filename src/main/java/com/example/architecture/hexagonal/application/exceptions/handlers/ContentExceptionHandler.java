@@ -22,6 +22,6 @@ class ContentExceptionHandler {
 
     @ExceptionHandler(NotAllowedDeletePublishedContent.class)
     public ResponseEntity<Object> handleNotAllowDeletePublishedContent(Exception exception) {
-        return new ResponseEntity<>(exception.getMessage(), new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
+        return new ResponseEntity<>(exception.getMessage(), new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 }

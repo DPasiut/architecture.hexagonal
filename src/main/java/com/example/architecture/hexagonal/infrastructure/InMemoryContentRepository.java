@@ -24,6 +24,34 @@ public class InMemoryContentRepository implements ContentRepository {
         fillRepository();
     }
 
+    @Override
+    public Optional<Content> getById(DmsId id) {
+        return contents.stream().filter(content1 -> content1.getDmsId().equals(id)).findFirst();
+    }
+
+    @Override
+    public void save(Content content) {
+        getIndexByDmsId(content.getDmsId()).ifPresentOrElse(
+                integer -> contents.set(integer, content),
+                () -> contents.add(content));
+    }
+
+    @Override
+    public void delete(DmsId id) {
+        getIndexByDmsId(id).ifPresent(integer -> contents.remove(integer.intValue()));
+    }
+
+    public void clearRepository(){
+        contents.clear();
+    }
+
+    public int size(){
+        return contents.size();
+    }
+    private Optional<Integer> getIndexByDmsId(DmsId id) {
+        return contents.stream().filter(content -> content.getDmsId().equals(id)).findFirst().map(content -> contents.indexOf(content));
+    }
+
     private void fillRepository() {
         Announcement announcement = Announcement.builder()
                 .dmsId(new DmsId("announcementDmsId"))
@@ -59,29 +87,5 @@ public class InMemoryContentRepository implements ContentRepository {
         contents.add(announcement);
         contents.add(blog);
         contents.add(publicComment);
-    }
-
-    @Override
-    public Optional<Content> getById(DmsId id) {
-        return contents.stream().filter(content1 -> content1.getDmsId().equals(id)).findFirst();
-    }
-
-    @Override
-    public void save(Content content) {
-        int index = getIndexByDmsId(content.getDmsId());
-        if (index >= 0) {
-            contents.set(index, content);
-        } else {
-            contents.add(content);
-        }
-    }
-
-    @Override
-    public void delete(DmsId id) {
-        contents.remove(getIndexByDmsId(id));
-    }
-
-    private int getIndexByDmsId(DmsId id) {
-        return contents.indexOf(contents.stream().filter(content -> content.getDmsId().equals(id)).findFirst().orElse(null));
     }
 }

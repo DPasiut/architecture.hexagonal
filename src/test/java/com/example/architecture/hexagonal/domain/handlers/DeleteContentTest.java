@@ -1,9 +1,7 @@
 package com.example.architecture.hexagonal.domain.handlers;
 
 import com.example.architecture.hexagonal.domain.Content;
-import com.example.architecture.hexagonal.domain.exceptions.ContentNotExistException;
 import com.example.architecture.hexagonal.domain.exceptions.NotAllowedDeletePublishedContent;
-import com.example.architecture.hexagonal.domain.exceptions.TooLongTitleException;
 import com.example.architecture.hexagonal.domain.handlers.delete.DeleteCommand;
 import com.example.architecture.hexagonal.domain.handlers.delete.DeleteCommandHandler;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
@@ -24,7 +22,7 @@ import static org.testng.Assert.assertThrows;
 @Test(testName = "Deleting Content")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DeleteContentTest {
-    InMemoryContentRepository inMemoryContentRepository = new InMemoryContentRepository();
+    final InMemoryContentRepository inMemoryContentRepository = new InMemoryContentRepository();
     final DeleteCommandHandler deleteCommandHandler = new DeleteCommandHandler(inMemoryContentRepository);
     final DmsId ID = new DmsId("newId");
 
@@ -54,7 +52,5 @@ public class DeleteContentTest {
         assertThrows(NotAllowedDeletePublishedContent.class, () -> {
             deleteCommandHandler.deleteContent(new DeleteCommand(ID));
         });
-
-
     }
 }

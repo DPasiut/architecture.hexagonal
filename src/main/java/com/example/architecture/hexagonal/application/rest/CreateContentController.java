@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CreateContentController {
     private final CreateCommandHandler createCommandHandler;
 
-    @PutMapping("/")
+    @PutMapping
     public ResponseEntity<Void> createContent(@RequestBody ContentDto contentDto) {
-        createCommandHandler.createContent(new CreateCommand(contentDto.toContent()));
+        createCommandHandler.createContent(new CreateCommand(contentDto));
         return ResponseEntity.ok().build();
     }
 }

@@ -49,6 +49,10 @@ public class Content {
         }
     }
 
+    public boolean canDelete() {
+        return this.publishStatus != PublishStatus.PUBLISHED;
+    }
+
     protected Slug buildSlugWithRules() {
         StringBuilder slug = new StringBuilder();
         slug

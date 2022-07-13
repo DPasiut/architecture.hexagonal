@@ -1,11 +1,8 @@
 package com.example.architecture.hexagonal.domain.handlers;
 
-import com.example.architecture.hexagonal.domain.Content;
+import com.example.architecture.hexagonal.domain.handlers.create.CreateCommand;
 import com.example.architecture.hexagonal.domain.handlers.create.CreateCommandHandler;
-import com.example.architecture.hexagonal.domain.types.PublishStatus;
-import com.example.architecture.hexagonal.domain.valueobjects.DmsId;
-import com.example.architecture.hexagonal.domain.valueobjects.PageDate;
-import com.example.architecture.hexagonal.domain.valueobjects.Title;
+import com.example.architecture.hexagonal.domain.valueobjects.*;
 import com.example.architecture.hexagonal.infrastructure.InMemoryContentRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -18,18 +15,19 @@ import static org.testng.Assert.assertEquals;
 @Test(testName = "Creating Content")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateContentTest {
-    InMemoryContentRepository inMemoryContentRepository = new InMemoryContentRepository();
+    final InMemoryContentRepository inMemoryContentRepository = new InMemoryContentRepository();
     final CreateCommandHandler createCommandHandler = new CreateCommandHandler(inMemoryContentRepository);
-    final DmsId ID = new DmsId("newId");
+    final LocalDate DATE = LocalDate.now();
     @Test
-    public void shouldCreateContent(){
-        Content content = Content.builder()
-                .dmsId(ID)
+    public void shouldCreateContent() {
+        ContentDto contentDto = ContentDto.builder()
                 .title(new Title("title"))
-                .pageDate(new PageDate(LocalDate.now()))
-                .publishStatus(PublishStatus.PUBLISHED)
+                .pageDate(new PageDate(DATE))
+                .publishDate(new PublishDate(DATE))
                 .build();
-        inMemoryContentRepository.save(content);
-        assertEquals(inMemoryContentRepository.getById(ID).get(), content);
+        inMemoryContentRepository.clearRepository();
+        assertEquals(inMemoryContentRepository.size(), 0);
+        createCommandHandler.createContent(new CreateCommand(contentDto));
+        assertEquals(inMemoryContentRepository.size(), 1);
     }
 }
