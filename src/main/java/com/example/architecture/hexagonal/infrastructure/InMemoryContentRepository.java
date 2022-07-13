@@ -20,7 +20,7 @@ import java.util.Optional;
 public class InMemoryContentRepository implements ContentRepository {
     private List<Content> contents = new ArrayList<>();
 
-    public InMemoryContentRepository()  {
+    public InMemoryContentRepository() {
         fillRepository();
     }
 
@@ -68,10 +68,20 @@ public class InMemoryContentRepository implements ContentRepository {
 
     @Override
     public void save(Content content) {
-        contents.set(getIndexByDmsId(content.getDmsId()), content);
+        int index = getIndexByDmsId(content.getDmsId());
+        if (index >= 0) {
+            contents.set(index, content);
+        } else {
+            contents.add(content);
+        }
     }
 
-    private int getIndexByDmsId(DmsId id){
-        return contents.indexOf(contents.stream().filter(content -> content.getDmsId().equals(id)).findFirst().orElseThrow());
+    @Override
+    public void delete(DmsId id) {
+        contents.remove(getIndexByDmsId(id));
+    }
+
+    private int getIndexByDmsId(DmsId id) {
+        return contents.indexOf(contents.stream().filter(content -> content.getDmsId().equals(id)).findFirst().orElse(null));
     }
 }
