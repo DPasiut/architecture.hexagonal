@@ -4,7 +4,6 @@ import com.example.architecture.hexagonal.domain.Content;
 import com.example.architecture.hexagonal.domain.exceptions.ContentNotExistException;
 import com.example.architecture.hexagonal.domain.exceptions.NotAllowedDeletePublishedContent;
 import com.example.architecture.hexagonal.domain.port.ContentRepository;
-import com.example.architecture.hexagonal.domain.service.DmsIdService;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.DmsId;
 import com.example.architecture.hexagonal.domain.valueobjects.PageDate;
