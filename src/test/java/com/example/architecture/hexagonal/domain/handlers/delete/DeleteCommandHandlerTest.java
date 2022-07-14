@@ -54,9 +54,9 @@ public class DeleteCommandHandlerTest {
                 .publishStatus(PublishStatus.DRAFT)
                 .build();
         DeleteCommand deleteCommand = new DeleteCommand(id);
+        when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
 
         //when
-        when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
         deleteCommandHandler.deleteContent(deleteCommand);
 
         //then
@@ -73,8 +73,6 @@ public class DeleteCommandHandlerTest {
                 .publishStatus(PublishStatus.PUBLISHED)
                 .build();
         DeleteCommand deleteCommand = new DeleteCommand(id);
-
-        //when
         when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
 
         //then

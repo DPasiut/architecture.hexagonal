@@ -22,7 +22,6 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertThrows;
 
 @Test(testName = "Unpublish Content")
@@ -58,9 +57,6 @@ public class UnpublishCommandHandlerTest {
 
         //then
         verify(contentRepository).save(content);
-
-        //and
-        assertEquals(content.getPublishStatus(), PublishStatus.UNPUBLISHED);
     }
 
     @Test

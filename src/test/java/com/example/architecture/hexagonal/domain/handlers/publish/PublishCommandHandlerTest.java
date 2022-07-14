@@ -56,9 +56,6 @@ public class PublishCommandHandlerTest {
 
         //then
         verify(contentRepository).save(content);
-
-        //and
-        assertEquals(content.getPublishStatus(), PublishStatus.PUBLISHED);
     }
 
     @Test
@@ -73,9 +70,6 @@ public class PublishCommandHandlerTest {
 
         //then
         verify(contentRepository).save(content);
-
-        //and
-        assertEquals(content.getPublishStatus(), PublishStatus.PUBLISHED);
     }
 
     @Test
@@ -83,8 +77,6 @@ public class PublishCommandHandlerTest {
         //given
         Content content = contentWithStatus(PublishStatus.PUBLISHED);
         PublishCommand publishCommand = new PublishCommand(id);
-
-        //when
         when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
 
         //then
