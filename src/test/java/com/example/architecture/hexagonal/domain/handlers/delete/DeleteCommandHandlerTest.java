@@ -1,4 +1,4 @@
-package com.example.architecture.hexagonal.domain.handlers;
+package com.example.architecture.hexagonal.domain.handlers.delete;
 
 import com.example.architecture.hexagonal.domain.Content;
 import com.example.architecture.hexagonal.domain.exceptions.NotAllowedDeletePublishedContent;
@@ -21,7 +21,7 @@ import static org.testng.Assert.assertThrows;
 
 @Test(testName = "Deleting Content")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class DeleteContentTest {
+public class DeleteCommandHandlerTest {
     final InMemoryContentRepository inMemoryContentRepository = new InMemoryContentRepository();
     final DeleteCommandHandler deleteCommandHandler = new DeleteCommandHandler(inMemoryContentRepository);
     final DmsId ID = new DmsId("newId");
