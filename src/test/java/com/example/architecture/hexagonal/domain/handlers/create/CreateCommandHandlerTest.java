@@ -9,11 +9,14 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.LocalDate;
 
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
@@ -28,28 +31,23 @@ public class CreateCommandHandlerTest {
     ContentRepository contentRepository;
     @Mock
     DmsIdService dmsIdService;
-    LocalDate date;
-    DmsId id;
+    Content content;
+    ContentDto contentDto;
 
     @BeforeMethod
     public void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
         createCommandHandler = new CreateCommandHandler(contentRepository, dmsIdService);
-        date = LocalDate.now();
-        id = new DmsId("randomUUID");
-        when(dmsIdService.generateId()).thenReturn(id);
-    }
+        LocalDate date = LocalDate.now();
+        DmsId id = new DmsId("randomUUID");
 
-    @Test
-    public void shouldCreateContent() {
-        //given
-        ContentDto contentDto = ContentDto.builder()
+        contentDto = ContentDto.builder()
                 .title(new Title("title"))
                 .pageDate(new PageDate(date))
                 .publishDate(new PublishDate(date))
                 .build();
-        CreateCommand createCommand = new CreateCommand(contentDto);
-        Content content = Content.builder()
+
+        content = Content.builder()
                 .dmsId(id)
                 .title(contentDto.getTitle())
                 .pageDate(contentDto.getPageDate())
@@ -57,11 +55,23 @@ public class CreateCommandHandlerTest {
                 .publishStatus(PublishStatus.DRAFT)
                 .build();
 
+        when(dmsIdService.generateId()).thenReturn(id);
+    }
+
+    @AfterMethod
+    public void cleanUp() throws Exception {
+        autoCloseable.close();
+    }
+
+    @Test
+    public void shouldCreateContent() {
+        //given
+        CreateCommand createCommand = new CreateCommand(contentDto);
+
         //when
         createCommandHandler.createContent(createCommand);
 
         //then
         verify(contentRepository).save(content);
-
     }
 }

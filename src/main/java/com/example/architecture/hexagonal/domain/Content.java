@@ -4,13 +4,16 @@ import com.example.architecture.hexagonal.domain.exceptions.ContentAlreadyPublis
 import com.example.architecture.hexagonal.domain.exceptions.ContentNotPublishedException;
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+@EqualsAndHashCode
+@ToString
 @SuperBuilder
 @Getter
 public class Content {
