@@ -27,6 +27,7 @@ import static org.testng.Assert.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PublishCommandHandlerTest {
     AutoCloseable autoCloseable;
+
     @Mock
     ContentRepository contentRepository;
     PublishCommandHandler publishCommandHandler;

@@ -32,10 +32,11 @@ public class DeleteContentControllerIntegrationTest extends AbstractTestNGSpring
 
     private final static String BASE_URL = "/content/";
     private final static String CONTENT_ID = "id";
-    @Autowired
-    WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
     private AutoCloseable closeable;
+
+    @Autowired
+    WebApplicationContext webApplicationContext;
 
     @Autowired
     ContentRepository contentRepository;
