@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ContentDto {
-    Title title;
-    PageDate pageDate;
-    PublishDate publishDate;
+    String title;
+    String pageDate;
+    String publishDate;
 }

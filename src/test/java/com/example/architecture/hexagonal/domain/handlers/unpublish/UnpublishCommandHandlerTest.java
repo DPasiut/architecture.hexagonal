@@ -28,6 +28,7 @@ import static org.testng.Assert.assertThrows;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UnpublishCommandHandlerTest {
     AutoCloseable autoCloseable;
+
     @Mock
     ContentRepository contentRepository;
     UnpublishCommandHandler unpublishCommandHandler;
@@ -52,7 +53,7 @@ public class UnpublishCommandHandlerTest {
         UnpublishCommand unpublishCommand = new UnpublishCommand(id);
 
         //when
-        when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
+        when(contentRepository.getById(id)).thenReturn(Optional.of(content));
         unpublishCommandHandler.unpublishContent(unpublishCommand);
 
         //then
@@ -64,7 +65,7 @@ public class UnpublishCommandHandlerTest {
         //given
         Content content = contentWithStatus(PublishStatus.DRAFT);
         UnpublishCommand unpublishCommand = new UnpublishCommand(id);
-        when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
+        when(contentRepository.getById(id)).thenReturn(Optional.of(content));
 
         //then
         assertThrows(ContentNotPublishedException.class, () -> {
@@ -77,7 +78,7 @@ public class UnpublishCommandHandlerTest {
         //given
         Content content = contentWithStatus(PublishStatus.UNPUBLISHED);
         UnpublishCommand unpublishCommand = new UnpublishCommand(id);
-        when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
+        when(contentRepository.getById(id)).thenReturn(Optional.of(content));
 
         //then
         assertThrows(ContentNotPublishedException.class, () -> {
@@ -90,7 +91,7 @@ public class UnpublishCommandHandlerTest {
         //given
         Content content = contentWithStatus(PublishStatus.DRAFT);
         UnpublishCommand unpublishCommand = new UnpublishCommand(id);
-        when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
+        when(contentRepository.getById(id)).thenReturn(Optional.of(content));
 
         //then
         assertThrows(ContentAlreadyPublishedException.class, () -> {

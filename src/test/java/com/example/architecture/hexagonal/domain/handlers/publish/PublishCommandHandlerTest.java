@@ -51,7 +51,7 @@ public class PublishCommandHandlerTest {
         PublishCommand publishCommand = new PublishCommand(id);
 
         //when
-        when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
+        when(contentRepository.getById(id)).thenReturn(Optional.of(content));
         publishCommandHandler.publishContent(publishCommand);
 
         //then
@@ -65,7 +65,7 @@ public class PublishCommandHandlerTest {
         PublishCommand publishCommand = new PublishCommand(id);
 
         //when
-        when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
+        when(contentRepository.getById(id)).thenReturn(Optional.of(content));
         publishCommandHandler.publishContent(publishCommand);
 
         //then
@@ -77,7 +77,7 @@ public class PublishCommandHandlerTest {
         //given
         Content content = contentWithStatus(PublishStatus.PUBLISHED);
         PublishCommand publishCommand = new PublishCommand(id);
-        when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
+        when(contentRepository.getById(id)).thenReturn(Optional.of(content));
 
         //then
         assertThrows(ContentAlreadyPublishedException.class, () -> {

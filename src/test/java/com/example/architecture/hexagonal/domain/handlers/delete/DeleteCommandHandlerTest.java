@@ -27,6 +27,7 @@ import static org.testng.Assert.assertThrows;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DeleteCommandHandlerTest {
     AutoCloseable autoCloseable;
+
     @Mock
     ContentRepository contentRepository;
     DeleteCommandHandler deleteCommandHandler;
@@ -54,7 +55,7 @@ public class DeleteCommandHandlerTest {
                 .publishStatus(PublishStatus.DRAFT)
                 .build();
         DeleteCommand deleteCommand = new DeleteCommand(id);
-        when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
+        when(contentRepository.getById(id)).thenReturn(Optional.of(content));
 
         //when
         deleteCommandHandler.deleteContent(deleteCommand);
@@ -73,7 +74,7 @@ public class DeleteCommandHandlerTest {
                 .publishStatus(PublishStatus.PUBLISHED)
                 .build();
         DeleteCommand deleteCommand = new DeleteCommand(id);
-        when(contentRepository.getById(id)).thenReturn(Optional.ofNullable(content));
+        when(contentRepository.getById(id)).thenReturn(Optional.of(content));
 
         //then
         assertThrows(NotAllowedDeletePublishedContent.class, () -> {

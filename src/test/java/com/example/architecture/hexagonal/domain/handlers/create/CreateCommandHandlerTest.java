@@ -15,11 +15,8 @@ import org.testng.annotations.Test;
 
 import java.time.LocalDate;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
 
 @Test(testName = "Creating Content")
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -27,8 +24,10 @@ public class CreateCommandHandlerTest {
 
     AutoCloseable autoCloseable;
     CreateCommandHandler createCommandHandler;
+
     @Mock
     ContentRepository contentRepository;
+
     @Mock
     DmsIdService dmsIdService;
     Content content;
@@ -42,16 +41,16 @@ public class CreateCommandHandlerTest {
         DmsId id = new DmsId("randomUUID");
 
         contentDto = ContentDto.builder()
-                .title(new Title("title"))
-                .pageDate(new PageDate(date))
-                .publishDate(new PublishDate(date))
+                .title("title")
+                .pageDate(date.toString())
+                .publishDate(date.toString())
                 .build();
 
         content = Content.builder()
                 .dmsId(id)
-                .title(contentDto.getTitle())
-                .pageDate(contentDto.getPageDate())
-                .publishDate(contentDto.getPublishDate())
+                .title(new Title(contentDto.getTitle()))
+                .pageDate(new PageDate(LocalDate.parse(contentDto.getPageDate())))
+                .publishDate(new PublishDate(LocalDate.parse(contentDto.getPublishDate())))
                 .publishStatus(PublishStatus.DRAFT)
                 .build();
 
