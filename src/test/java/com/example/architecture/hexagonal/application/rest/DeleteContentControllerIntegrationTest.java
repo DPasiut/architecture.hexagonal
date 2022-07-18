@@ -7,6 +7,8 @@ import com.example.architecture.hexagonal.domain.valueobjects.DmsId;
 import com.example.architecture.hexagonal.domain.valueobjects.PageDate;
 import com.example.architecture.hexagonal.domain.valueobjects.PublishDate;
 import com.example.architecture.hexagonal.domain.valueobjects.Title;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,12 +30,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class DeleteContentControllerIntegrationTest extends AbstractTestNGSpringContextTests {
 
-    private final static String BASE_URL = "/content/";
-    private final static String CONTENT_ID = "id";
-    private MockMvc mockMvc;
-    private AutoCloseable closeable;
+    final static String BASE_URL = "/content/";
+    final static String CONTENT_ID = "id";
+    MockMvc mockMvc;
+    AutoCloseable closeable;
 
     @Autowired
     WebApplicationContext webApplicationContext;

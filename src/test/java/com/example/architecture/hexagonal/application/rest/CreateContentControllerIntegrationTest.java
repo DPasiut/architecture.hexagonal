@@ -1,5 +1,7 @@
 package com.example.architecture.hexagonal.application.rest;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,12 +23,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateContentControllerIntegrationTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     WebApplicationContext webApplicationContext;
-    private MockMvc mockMvc;
-    private AutoCloseable closeable;
+    MockMvc mockMvc;
+    AutoCloseable closeable;
 
     @BeforeMethod
     public void initController() {

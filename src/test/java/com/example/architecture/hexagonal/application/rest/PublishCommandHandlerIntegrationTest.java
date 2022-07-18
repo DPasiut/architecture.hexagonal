@@ -7,10 +7,13 @@ import com.example.architecture.hexagonal.domain.valueobjects.DmsId;
 import com.example.architecture.hexagonal.domain.valueobjects.PageDate;
 import com.example.architecture.hexagonal.domain.valueobjects.PublishDate;
 import com.example.architecture.hexagonal.domain.valueobjects.Title;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,10 +32,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class PublishCommandHandlerIntegrationTest extends AbstractTestNGSpringContextTests {
-    private final static String BASE_URL = "/content/";
-    private final static String CONTENT_ID = "id";
-    private MockMvc mockMvc;
-    private AutoCloseable closeable;
+    final static String BASE_URL = "/content/";
+    final static String CONTENT_ID = "id";
+    MockMvc mockMvc;
+    AutoCloseable closeable;
 
     @Autowired
     WebApplicationContext webApplicationContext;
@@ -50,6 +53,7 @@ public class PublishCommandHandlerIntegrationTest extends AbstractTestNGSpringCo
 
     @AfterMethod
     public void cleanup() throws Exception {
+        contentRepository.delete(new DmsId(CONTENT_ID));
         closeable.close();
     }
 
