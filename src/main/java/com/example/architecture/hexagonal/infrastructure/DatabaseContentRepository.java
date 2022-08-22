@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Repository
@@ -25,5 +27,10 @@ class DatabaseContentRepository implements ContentRepository {
     @Override
     public void save(Content content) {
         contentRepository.save(contentMapper.mapToMongoContent(content));
+    }
+
+    @Override
+    public void delete(DmsId id) {
+        contentRepository.deleteById(id.value());
     }
 }

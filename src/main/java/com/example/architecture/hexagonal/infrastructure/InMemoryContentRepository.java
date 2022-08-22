@@ -20,8 +20,36 @@ import java.util.Optional;
 public class InMemoryContentRepository implements ContentRepository {
     private List<Content> contents = new ArrayList<>();
 
-    public InMemoryContentRepository()  {
+    public InMemoryContentRepository() {
         fillRepository();
+    }
+
+    @Override
+    public Optional<Content> getById(DmsId id) {
+        return contents.stream().filter(content1 -> content1.getDmsId().equals(id)).findFirst();
+    }
+
+    @Override
+    public void save(Content content) {
+        getIndexByDmsId(content.getDmsId()).ifPresentOrElse(
+                integer -> contents.set(integer, content),
+                () -> contents.add(content));
+    }
+
+    @Override
+    public void delete(DmsId id) {
+        getIndexByDmsId(id).ifPresent(integer -> contents.remove(integer.intValue()));
+    }
+
+    public void clearRepository(){
+        contents.clear();
+    }
+
+    public int size(){
+        return contents.size();
+    }
+    private Optional<Integer> getIndexByDmsId(DmsId id) {
+        return contents.stream().filter(content -> content.getDmsId().equals(id)).findFirst().map(content -> contents.indexOf(content));
     }
 
     private void fillRepository() {
@@ -59,19 +87,5 @@ public class InMemoryContentRepository implements ContentRepository {
         contents.add(announcement);
         contents.add(blog);
         contents.add(publicComment);
-    }
-
-    @Override
-    public Optional<Content> getById(DmsId id) {
-        return contents.stream().filter(content1 -> content1.getDmsId().equals(id)).findFirst();
-    }
-
-    @Override
-    public void save(Content content) {
-        contents.set(getIndexByDmsId(content.getDmsId()), content);
-    }
-
-    private int getIndexByDmsId(DmsId id){
-        return contents.indexOf(contents.stream().filter(content -> content.getDmsId().equals(id)).findFirst().orElseThrow());
     }
 }

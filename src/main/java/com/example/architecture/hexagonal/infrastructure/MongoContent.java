@@ -2,23 +2,20 @@ package com.example.architecture.hexagonal.infrastructure;
 
 import com.example.architecture.hexagonal.domain.types.PublishStatus;
 import com.example.architecture.hexagonal.domain.valueobjects.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 @Getter
 @EqualsAndHashCode
 @SuperBuilder
+@RequiredArgsConstructor
 public class MongoContent {
-
     @Id
-    @NonNull
     String id;
-    @NonNull
     Title title;
-    @NonNull
     PageDate pageDate;
     PublishStatus publishStatus;
     PublishDate publishDate;

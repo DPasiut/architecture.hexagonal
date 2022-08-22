@@ -1,9 +1,6 @@
 package com.example.architecture.hexagonal.application.exceptions.handlers;
 
-import com.example.architecture.hexagonal.domain.exceptions.ContentAlreadyPublishedException;
-import com.example.architecture.hexagonal.domain.exceptions.ContentNotExistException;
-import com.example.architecture.hexagonal.domain.exceptions.ContentNotFoundException;
-import com.example.architecture.hexagonal.domain.exceptions.ContentNotPublishedException;
+import com.example.architecture.hexagonal.domain.exceptions.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +16,12 @@ class ContentExceptionHandler {
     }
 
     @ExceptionHandler({ContentAlreadyPublishedException.class, ContentNotPublishedException.class})
-    public ResponseEntity<Object> handleContentPublishedException(Exception exception){
+    public ResponseEntity<Object> handleContentPublishedException(Exception exception) {
         return new ResponseEntity<>(exception.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotAllowedDeletePublishedContent.class)
+    public ResponseEntity<Object> handleNotAllowDeletePublishedContent(Exception exception) {
+        return new ResponseEntity<>(exception.getMessage(), new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 }
